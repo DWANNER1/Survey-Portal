@@ -75,10 +75,14 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    if (!studyId) return;
+    if (studyId === null) return;
+    const currentStudyId = studyId;
     async function loadFiltersAndViews() {
       try {
-        const [options, views] = await Promise.all([getFilterOptions(studyId), getSavedViews(studyId, getAuthToken)]);
+        const [options, views] = await Promise.all([
+          getFilterOptions(currentStudyId),
+          getSavedViews(currentStudyId, getAuthToken),
+        ]);
         setFilterOptions(options);
         setSavedViews(views);
       } catch (err) {
@@ -89,13 +93,14 @@ export default function HomePage() {
   }, [studyId]);
 
   useEffect(() => {
-    if (!studyId) return;
+    if (studyId === null) return;
+    const currentStudyId = studyId;
     async function loadData() {
       try {
         setLoading(true);
         const [ts, dist] = await Promise.all([
-          getTimeseries(studyId, questionCode, filters),
-          getDistribution(studyId, questionCode, distributionDimension, filters),
+          getTimeseries(currentStudyId, questionCode, filters),
+          getDistribution(currentStudyId, questionCode, distributionDimension, filters),
         ]);
         setTimeseries(ts);
         setDistribution(dist);
@@ -113,11 +118,12 @@ export default function HomePage() {
   }
 
   async function onSaveView() {
-    if (!studyId || !newViewName.trim()) return;
+    if (studyId === null || !newViewName.trim()) return;
+    const currentStudyId = studyId;
     try {
       await createSavedView(
         {
-          study_id: studyId,
+          study_id: currentStudyId,
           name: newViewName.trim(),
           question_code: questionCode,
           distribution_dimension: distributionDimension,
@@ -126,7 +132,7 @@ export default function HomePage() {
         getAuthToken
       );
       setNewViewName("");
-      const views = await getSavedViews(studyId, getAuthToken);
+      const views = await getSavedViews(currentStudyId, getAuthToken);
       setSavedViews(views);
     } catch (err) {
       setError((err as Error).message);
@@ -145,10 +151,11 @@ export default function HomePage() {
   }
 
   async function onDeleteView(viewId: number) {
-    if (!studyId) return;
+    if (studyId === null) return;
+    const currentStudyId = studyId;
     try {
       await deleteSavedView(viewId, getAuthToken);
-      const views = await getSavedViews(studyId, getAuthToken);
+      const views = await getSavedViews(currentStudyId, getAuthToken);
       setSavedViews(views);
     } catch (err) {
       setError((err as Error).message);
@@ -156,13 +163,14 @@ export default function HomePage() {
   }
 
   async function onExportCsv() {
-    if (!studyId) return;
+    if (studyId === null) return;
+    const currentStudyId = studyId;
     try {
-      const file = await exportCsv(studyId, questionCode, distributionDimension, filters, getAuthToken);
+      const file = await exportCsv(currentStudyId, questionCode, distributionDimension, filters, getAuthToken);
       const url = URL.createObjectURL(file);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `study-${studyId}-${questionCode}-${distributionDimension}.csv`;
+      a.download = `study-${currentStudyId}-${questionCode}-${distributionDimension}.csv`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
