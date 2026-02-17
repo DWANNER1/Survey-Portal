@@ -42,12 +42,15 @@ export default function ChartPanel({ timeseries, distribution, questionCode, sel
           <h3>Time Trend</h3>
           <ResponsiveContainer width="100%" height={280}>
             <LineChart data={timeseries}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e7e5dd" />
-              <XAxis dataKey="wave" tick={{ fill: "#3f3b2c" }} />
-              <YAxis domain={[0, 100]} tick={{ fill: "#3f3b2c" }} />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="value" stroke="#2a5db0" strokeWidth={3} dot={{ r: 4 }} />
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(166, 193, 255, 0.25)" />
+              <XAxis dataKey="wave" tick={{ fill: "#d9e4ff" }} />
+              <YAxis domain={[0, 100]} tick={{ fill: "#d9e4ff" }} />
+              <Tooltip
+                contentStyle={{ background: "#0a173f", border: "1px solid rgba(130,166,255,0.45)", color: "#eff4ff" }}
+                labelStyle={{ color: "#eff4ff" }}
+              />
+              <Legend wrapperStyle={{ color: "#d9e4ff" }} />
+              <Line type="monotone" dataKey="value" stroke="#1ecad3" strokeWidth={3} dot={{ r: 4 }} />
             </LineChart>
           </ResponsiveContainer>
         </div>
@@ -56,12 +59,15 @@ export default function ChartPanel({ timeseries, distribution, questionCode, sel
           <h3>{selectedDimension} Distribution</h3>
           <ResponsiveContainer width="100%" height={280}>
             <BarChart data={distribution}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e7e5dd" />
-              <XAxis dataKey="group" tick={{ fill: "#3f3b2c" }} />
-              <YAxis domain={[0, 100]} tick={{ fill: "#3f3b2c" }} />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="value" fill="#db7c2a" radius={[6, 6, 0, 0]} />
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(166, 193, 255, 0.25)" />
+              <XAxis dataKey="group" tick={{ fill: "#d9e4ff" }} />
+              <YAxis domain={[0, 100]} tick={{ fill: "#d9e4ff" }} />
+              <Tooltip
+                contentStyle={{ background: "#0a173f", border: "1px solid rgba(130,166,255,0.45)", color: "#eff4ff" }}
+                labelStyle={{ color: "#eff4ff" }}
+              />
+              <Legend wrapperStyle={{ color: "#d9e4ff" }} />
+              <Bar dataKey="value" fill="#ff8f42" radius={[6, 6, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>

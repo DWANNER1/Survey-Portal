@@ -55,6 +55,17 @@ export default function HomePage() {
   const [error, setError] = useState<string>("");
 
   const activeStudy = useMemo(() => studies.find((s) => s.id === studyId) || null, [studies, studyId]);
+  const latestPoint = timeseries.length > 0 ? timeseries[timeseries.length - 1] : null;
+  const previousPoint = timeseries.length > 1 ? timeseries[timeseries.length - 2] : null;
+  const trendDelta =
+    latestPoint && previousPoint && latestPoint.value !== null && previousPoint.value !== null
+      ? Number((latestPoint.value - previousPoint.value).toFixed(1))
+      : null;
+  const valuedDistribution = distribution.filter((row) => row.value !== null);
+  const distributionAvg =
+    valuedDistribution.length > 0
+      ? Number((valuedDistribution.reduce((acc, row) => acc + (row.value ?? 0), 0) / valuedDistribution.length).toFixed(1))
+      : null;
 
   useEffect(() => {
     async function bootstrap() {
@@ -182,21 +193,47 @@ export default function HomePage() {
 
   return (
     <main className="container">
+      <div className="bgGlow bgGlowA" />
+      <div className="bgGlow bgGlowB" />
+
       <header className="hero">
         <div className="heroTop">
           <div>
-            <p className="eyebrow">Subscriber Intelligence Portal</p>
-            <h1>Interactive Survey Analytics</h1>
+            <p className="eyebrow">Survey Intelligence Hub</p>
+            <h1>Interactive Evidence Portal</h1>
           </div>
           <SignedIn>
             <UserButton />
           </SignedIn>
         </div>
         <p>
-          Explore how views shift across industry, region, gender, and voter alignment. Save favorite cuts and export
-          evidence-ready CSVs instantly.
+          Explore multidimensional survey data with instant filtering, trend tracking, and export-ready outputs. Built
+          for subscribers who need to move from question to insight quickly.
         </p>
+        <div className="heroBadges">
+          <span>Secure subscriber access</span>
+          <span>Interactive trend analysis</span>
+          <span>Downloadable outputs</span>
+        </div>
       </header>
+
+      <section className="kpiGrid">
+        <article className="kpiCard">
+          <p>Latest Wave Score</p>
+          <h3>{latestPoint?.value ?? "--"}</h3>
+          <small>{latestPoint?.wave ?? "No wave loaded"}</small>
+        </article>
+        <article className="kpiCard">
+          <p>Wave-over-Wave Change</p>
+          <h3>{trendDelta === null ? "--" : trendDelta > 0 ? `+${trendDelta}` : trendDelta}</h3>
+          <small>{trendDelta === null ? "Need 2+ waves" : "Compared to prior wave"}</small>
+        </article>
+        <article className="kpiCard">
+          <p>Distribution Mean</p>
+          <h3>{distributionAvg ?? "--"}</h3>
+          <small>Across {distributionDimension}</small>
+        </article>
+      </section>
 
       <section className="panel controls">
         <div className="control">
@@ -236,6 +273,30 @@ export default function HomePage() {
       {activeStudy && (
         <FilterPanel options={filterOptions} filters={filters} onFilterChange={onFilterChange} studyLabel={activeStudy.name} />
       )}
+
+      <section className="featureRow">
+        <article className="featureCard">
+          <h3>Cross-Segment Discovery</h3>
+          <p>
+            Slice results by industry, region, gender, and voting profile to reveal where attitudes diverge and where
+            consensus forms.
+          </p>
+        </article>
+        <article className="featureCard">
+          <h3>Track Signal Shift</h3>
+          <p>
+            Monitor movement across survey waves to quantify momentum, inflection points, and directional change with
+            minimal setup.
+          </p>
+        </article>
+        <article className="featureCard">
+          <h3>Client-Ready Output</h3>
+          <p>
+            Save high-value views and export to CSV for downstream reporting decks, internal dashboards, and briefing
+            packs.
+          </p>
+        </article>
+      </section>
 
       <section className="panel savedViews">
         <div className="panelHeader">

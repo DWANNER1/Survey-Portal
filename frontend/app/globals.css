@@ -1,11 +1,13 @@
 :root {
-  --bg: #f5efe3;
-  --ink: #2b281e;
-  --panel: #fffdf8;
-  --accent: #2a5db0;
-  --accent-2: #db7c2a;
-  --border: #ded5c1;
-  --muted: #6f6857;
+  --bg: #040b2b;
+  --ink: #ecf3ff;
+  --panel: rgba(13, 20, 58, 0.72);
+  --panel-2: rgba(17, 30, 82, 0.78);
+  --accent: #1ecad3;
+  --accent-2: #ff8f42;
+  --accent-3: #7ea2ff;
+  --border: rgba(136, 167, 255, 0.28);
+  --muted: #b6c4f0;
 }
 
 * {
@@ -14,26 +16,61 @@
 
 body {
   margin: 0;
-  background:
-    radial-gradient(circle at 20% 10%, #fff7e6 0%, transparent 30%),
-    radial-gradient(circle at 90% 20%, #e9f2ff 0%, transparent 28%),
+  background: radial-gradient(circle at 20% 5%, #1739a6 0%, transparent 35%),
+    radial-gradient(circle at 85% 10%, #5e2f91 0%, transparent 32%),
+    radial-gradient(circle at 50% 100%, #0b2a72 0%, transparent 28%),
     var(--bg);
   color: var(--ink);
-  font-family: "Segoe UI", "Trebuchet MS", sans-serif;
+  font-family: "Avenir Next", "Segoe UI", "Trebuchet MS", sans-serif;
 }
 
 .container {
-  max-width: 1120px;
+  position: relative;
+  max-width: 1180px;
   margin: 0 auto;
-  padding: 2rem 1rem 3rem;
+  padding: 2.2rem 1rem 3.2rem;
+  overflow: hidden;
+}
+
+.bgGlow {
+  position: absolute;
+  z-index: 0;
+  width: 380px;
+  height: 380px;
+  border-radius: 999px;
+  filter: blur(60px);
+  opacity: 0.28;
+}
+
+.bgGlowA {
+  background: #58d8d8;
+  top: 10rem;
+  left: -8rem;
+}
+
+.bgGlowB {
+  background: #ff9b57;
+  top: 38rem;
+  right: -10rem;
+}
+
+.hero,
+.panel,
+.kpiGrid,
+.featureRow,
+.loading,
+.error {
+  position: relative;
+  z-index: 1;
 }
 
 .hero {
-  background: linear-gradient(120deg, #fffaf0 0%, #f2f6ff 100%);
+  background: linear-gradient(145deg, rgba(15, 32, 90, 0.92) 0%, rgba(26, 42, 109, 0.78) 45%, rgba(44, 25, 92, 0.74) 100%);
   border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 1.5rem;
+  border-radius: 22px;
+  padding: 1.6rem;
   margin-bottom: 1rem;
+  box-shadow: 0 14px 40px rgba(2, 8, 30, 0.36);
 }
 
 .heroTop {
@@ -46,26 +83,73 @@ body {
 .eyebrow {
   margin: 0;
   text-transform: uppercase;
-  font-size: 0.8rem;
-  letter-spacing: 0.08em;
-  color: var(--muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  color: #96b6ff;
 }
 
 h1 {
   margin: 0.3rem 0;
-  font-size: 2rem;
+  font-size: 2.2rem;
+  letter-spacing: 0.01em;
 }
 
 p {
-  line-height: 1.45;
+  line-height: 1.48;
+}
+
+.heroBadges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 0.95rem;
+}
+
+.heroBadges span {
+  border: 1px solid rgba(170, 197, 255, 0.34);
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  font-size: 0.82rem;
+  padding: 0.32rem 0.62rem;
+  color: #dce6ff;
+}
+
+.kpiGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.kpiCard {
+  background: linear-gradient(165deg, rgba(14, 30, 86, 0.88) 0%, rgba(10, 17, 50, 0.84) 100%);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 0.95rem 1rem;
+}
+
+.kpiCard p {
+  margin: 0;
+  color: #9bb2ee;
+  font-size: 0.84rem;
+}
+
+.kpiCard h3 {
+  margin: 0.35rem 0;
+  font-size: 2rem;
+  color: #ffffff;
+}
+
+.kpiCard small {
+  color: #b8c8f0;
 }
 
 .panel {
-  background: var(--panel);
+  background: linear-gradient(155deg, var(--panel) 0%, var(--panel-2) 100%);
   border: 1px solid var(--border);
-  border-radius: 14px;
+  border-radius: 16px;
   padding: 1rem;
   margin-top: 1rem;
+  box-shadow: 0 10px 28px rgba(2, 8, 30, 0.25);
 }
 
 .panelHeader h2 {
@@ -73,7 +157,7 @@ p {
 }
 
 .panelHeader p {
-  margin-top: 0.4rem;
+  margin-top: 0.35rem;
   color: var(--muted);
 }
 
@@ -93,51 +177,71 @@ p {
 label,
 .field span {
   font-size: 0.9rem;
-  color: var(--muted);
+  color: #b4c5f4;
 }
 
-select {
-  width: 100%;
-  border: 1px solid #cfc6b3;
-  border-radius: 10px;
-  padding: 0.55rem 0.6rem;
-  background: #ffffff;
-  color: var(--ink);
-}
-
+select,
 input[type="text"] {
   width: 100%;
-  border: 1px solid #cfc6b3;
+  border: 1px solid rgba(137, 170, 255, 0.36);
   border-radius: 10px;
-  padding: 0.55rem 0.6rem;
-  background: #ffffff;
-  color: var(--ink);
+  padding: 0.58rem 0.62rem;
+  background: rgba(6, 16, 50, 0.72);
+  color: #eff4ff;
 }
 
 button {
   border: 1px solid transparent;
   border-radius: 10px;
-  padding: 0.56rem 0.8rem;
-  background: var(--accent);
-  color: white;
-  font-weight: 600;
+  padding: 0.56rem 0.84rem;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-3) 100%);
+  color: #04133d;
+  font-weight: 700;
   cursor: pointer;
 }
 
+button:hover {
+  filter: brightness(1.06);
+}
+
 button.outline {
-  background: #fff;
-  color: var(--ink);
-  border-color: #cfc6b3;
+  background: rgba(255, 255, 255, 0.06);
+  color: #ebf1ff;
+  border-color: rgba(171, 196, 255, 0.34);
 }
 
 button.danger {
-  background: #a63529;
+  background: linear-gradient(135deg, #ff8f42 0%, #d65646 100%);
+  color: #fff;
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0.8rem;
+}
+
+.featureRow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.featureCard {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 0.9rem;
+  background: linear-gradient(145deg, rgba(10, 28, 80, 0.9) 0%, rgba(34, 25, 79, 0.82) 100%);
+}
+
+.featureCard h3 {
+  margin: 0 0 0.35rem;
+}
+
+.featureCard p {
+  margin: 0;
+  color: #c3d0f5;
 }
 
 .savedViewCreate {
@@ -157,9 +261,10 @@ button.danger {
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
-  border: 1px solid #eee5d3;
+  border: 1px solid rgba(173, 198, 255, 0.24);
   border-radius: 10px;
   padding: 0.7rem;
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .savedViewItem p {
@@ -189,8 +294,8 @@ button.danger {
 }
 
 .chartCard {
-  background: #fff;
-  border: 1px solid #eee5d3;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(171, 194, 248, 0.22);
   border-radius: 12px;
   padding: 0.75rem;
 }
@@ -206,13 +311,15 @@ button.danger {
 }
 
 .error {
-  color: #9e2c1f;
+  color: #ff9f7a;
 }
 
 @media (max-width: 900px) {
   .controls,
   .grid,
-  .chartWrap {
+  .chartWrap,
+  .kpiGrid,
+  .featureRow {
     grid-template-columns: 1fr;
   }
 
@@ -226,6 +333,6 @@ button.danger {
   }
 
   h1 {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
   }
 }
